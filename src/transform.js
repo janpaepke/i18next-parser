@@ -132,7 +132,7 @@ export default class i18nTransform extends Transform {
       key = key.replace(/\\t/g, '\t')
       key = key.replace(/\\\\/g, '\\')
       entry.key = key
-      entry.keyWithNamespace = entry.namespace + this.options.keySeparator + key
+      entry.keyWithNamespace = entry.namespace + this.options.namespaceSeparator + key
       // Add the filename so that we can use it in customValueTemplate
       this.keyToFilePaths[key] = this.keyToFilePaths[key] || []
       if (!this.keyToFilePaths[key].includes(file.path)) {
@@ -186,10 +186,10 @@ export default class i18nTransform extends Transform {
           if (conflict === 'key') {
             this.warn(
               `Found translation key already mapped to a map or parent of ` +
-                `new key already mapped to a string: ${entry.key}`
+                `new key already mapped to a string: ${entry.keyWithNamespace}`
             )
           } else if (conflict === 'value') {
-            this.warn(`Found same keys with different values: ${entry.key}`)
+            this.warn(`Found same keys with different values: ${entry.keyWithNamespace}`)
           }
         } else {
           uniqueCount[entry.namespace] += 1
